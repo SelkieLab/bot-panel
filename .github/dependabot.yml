@@ -1,0 +1,10 @@
+version: 2
+updates:
+  # 项目没有语言层依赖，但 workflow 里用的 action 需要跟版本
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore"
+    labels: ["dependencies"]

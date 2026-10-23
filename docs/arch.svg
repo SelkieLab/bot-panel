@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="330" viewBox="0 0 880 330" role="img" aria-label="bot-panel 架构图">
+  <defs>
+    <style>
+      .bg{fill:#141316}
+      .box{fill:#201f23;stroke:#49454f;stroke-width:1.2}
+      .box-hi{fill:#4f378b;stroke:#d0bcff;stroke-width:1.4}
+      .t{fill:#e6e1e6;font-family:ui-sans-serif,system-ui,'Segoe UI',sans-serif;font-size:14px;font-weight:600}
+      .s{fill:#cac4d0;font-family:ui-ui-monospace,ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px}
+      .lbl{fill:#cac4d0;font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px}
+      .arrow{stroke:#938f99;stroke-width:1.3;fill:none}
+      .accent{fill:#d0bcff}
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#938f99"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="880" height="330" rx="16"/>
+
+  <!-- 浏览器 -->
+  <rect class="box" x="34" y="130" width="128" height="72" rx="14"/>
+  <text class="t" x="98" y="160" text-anchor="middle">浏览器</text>
+  <text class="s" x="98" y="180" text-anchor="middle">MD3 单页</text>
+
+  <line class="arrow" x1="164" y1="166" x2="248" y2="166" marker-end="url(#a)"/>
+  <text class="lbl" x="206" y="156" text-anchor="middle">HTTPS</text>
+
+  <!-- server.py -->
+  <rect class="box-hi" x="250" y="96" width="196" height="140" rx="18"/>
+  <text class="t" x="348" y="128" text-anchor="middle">server.py</text>
+  <text class="s" x="348" y="150" text-anchor="middle">http.server</text>
+  <text class="s" x="348" y="169" text-anchor="middle">sqlite3 · hashlib</text>
+  <text class="s" x="348" y="188" text-anchor="middle">hmac · urllib</text>
+  <text class="lbl" x="348" y="216" text-anchor="middle">纯标准库</text>
+
+  <!-- 上游 -->
+  <line class="arrow" x1="448" y1="140" x2="536" y2="62" marker-end="url(#a)"/>
+  <line class="arrow" x1="448" y1="166" x2="536" y2="150" marker-end="url(#a)"/>
+  <line class="arrow" x1="448" y1="192" x2="536" y2="238" marker-end="url(#a)"/>
+
+  <rect class="box" x="540" y="34" width="150" height="56" rx="13"/>
+  <text class="t" x="615" y="58" text-anchor="middle">AstrBot</text>
+  <text class="s" x="615" y="76" text-anchor="middle">:6185</text>
+
+  <rect class="box" x="540" y="122" width="150" height="56" rx="13"/>
+  <text class="t" x="615" y="146" text-anchor="middle">SnowLuma</text>
+  <text class="s" x="615" y="164" text-anchor="middle">:5099</text>
+
+  <rect class="box" x="540" y="210" width="150" height="56" rx="13"/>
+  <text class="t" x="615" y="234" text-anchor="middle">OneBot</text>
+  <text class="s" x="615" y="252" text-anchor="middle">:3000</text>
+
+  <!-- docker -->
+  <line class="arrow" x1="348" y1="238" x2="348" y2="286" marker-end="url(#a)"/>
+  <text class="lbl" x="360" y="266">docker CLI</text>
+  <rect class="box" x="250" y="288" width="196" height="30" rx="10"/>
+  <text class="s" x="348" y="308" text-anchor="middle">/run/docker.sock</text>
+
+  <text class="lbl" x="740" y="150">全部只绑</text>
+  <text class="lbl" x="740" y="168">127.0.0.1</text>
+  <text class="lbl" x="740" y="196">对外只开面板</text>
+</svg>

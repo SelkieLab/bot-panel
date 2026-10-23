@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: 逻辑回归 + 语法检查
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 语法检查
+        run: |
+          python -m py_compile server.py qqrefresh.py
+          python -m py_compile deploy/bin/hash_assets.py deploy/bin/panel_tests.py
+          echo "语法检查通过"
+
+      - name: 逻辑回归（30 项）
+        run: python deploy/bin/panel_tests.py
+
+      - name: 前端资源无需构建，检查文件齐全
+        run: |
+          for f in static/index.html static/login.html static/css/app.css static/js/app.js static/js/boot.js static/js/theme.js static/js/sw.js static/manifest.webmanifest; do
+            test -f "$f" || { echo "缺少 $f"; exit 1; }
+          done
+          echo "静态资源齐全"
+
+      - name: 启动冒烟测试
+        run: |
+          PANEL_INIT_PASSWORD=ci-test-password PANEL_PORT=16666 python server.py &
+          SRV=$!
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:16666/healthz >/dev/null 2>&1; then break; fi
+            sleep 0.5
+          done
+          echo "--- healthz ---"
+          curl -fsS http://127.0.0.1:16666/healthz
+          echo
+          echo "--- login page ---"
+          curl -fsS -o /dev/null -w "GET /login -> %{http_code}\n" http://127.0.0.1:16666/login
+          echo "--- 未登录访问 API 应 401 ---"
+          code=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:16666/api/status)
+          test "$code" = "401" || { echo "期望 401，实际 $code"; kill $SRV; exit 1; }
+          echo "401 正确"
+          kill $SRV

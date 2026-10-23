@@ -1,0 +1,40 @@
+name: 提出功能
+description: 希望增加或改动什么
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        说清楚"要解决什么问题"比"要加什么按钮"更有用。
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 现在卡在哪
+      description: 描述你实际遇到的麻烦，不要先给方案
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 你想到的做法
+      description: 可选。如果想到多个方案，说说各自的取舍
+    validations:
+      required: false
+
+  - type: textarea
+    id: alt
+    attributes:
+      label: 试过的替代方案
+      description: 现在是怎么绕过去的？
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: dependency
+    attributes:
+      label: 是否需要新依赖
+      options:
+        - label: 这个功能需要引入第三方依赖
+        - label: 我确认标准库做不到

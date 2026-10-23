@@ -1,9 +1,20 @@
-# BotPanel
+# bot-panel
 
-AstrBot + SnowLuma 的单文件控制面板 —— 纯 Python 标准库实现，零第三方依赖。
+[![CI](https://github.com/SelkieLab/bot-panel/actions/workflows/ci.yml/badge.svg)](https://github.com/SelkieLab/bot-panel/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/SelkieLab/bot-panel?color=3ddc97)](https://github.com/SelkieLab/bot-panel/blob/main/LICENSE)
+[![Python](https://img.shields.io/badge/python-3.8%2B-d0bcff)](https://www.python.org)
+[![依赖](https://img.shields.io/badge/dependencies-0-d0bcff)](#快速开始)
 
-一套界面管完：容器状态、实时日志、插件市场、人格提示词、QQ 扫码登录、知识库。
-前端是 MD3 风格的单页应用，移动端可用，支持 PWA 离线兜底。
+AstrBot + SnowLuma 的单文件控制面板。纯 Python 标准库，零第三方依赖。
+
+容器状态、实时日志、插件市场、人格提示词、QQ 扫码登录、知识库，
+全在一个网页里。前端是 MD3 风格的单页应用，手机能用，离线有兜底。
+
+```
+不装 node_modules    不打包    不连数据库服务    不需要注册任何账号
+```
+
+![架构](docs/arch.svg)
 
 ```
 server.py        # 全部后端逻辑（HTTP 服务 + 上游代理 + TOTP + 审计），一个文件
@@ -13,6 +24,19 @@ deploy/          # systemd 单元、备份脚本、compose 文件、证书工具
 personas.example.json  # 人格模板库示例（真实人设放 personas.json，已在 .gitignore）
 docs/            # 改造记录与运维笔记
 ```
+
+---
+
+## 目录
+
+- [能力](#能力)
+- [快速开始](#快速开始)
+- [环境变量](#环境变量)
+- [部署](#部署systemd)
+- [安全模型](#安全模型)
+- [已知限制](#已知限制)
+- [文档](#文档)
+- [许可](#许可)
 
 ---
 
@@ -122,6 +146,21 @@ sudo systemctl daemon-reload && sudo systemctl enable --now bot-panel
   只对特定部署形态有意义，按自己的反代端口改 `static/js/app.js`
 * 知识库需要 OpenAI 兼容的 **embedding** 接口；只有对话模型建不了库（会明确提示，不会假成功）
 * `qqrefresh.py` 依赖容器内 X11（`:1`）与固定的点击坐标，分辨率变了要调
+
+## 文档
+
+| 文档 | 内容 |
+|---|---|
+| [docs/DEPLOY.md](docs/DEPLOY.md) | 从干净 Ubuntu 到外网可访问，含无域名方案与排障表 |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | 请求怎么走、为什么是单文件、缓存策略、数据落点 |
+| [docs/CHANGELOG-2026-10-23.md](docs/CHANGELOG-2026-10-23.md) | 首个版本之前的 11 项改造记录 |
+| [CHANGELOG.md](CHANGELOG.md) | 版本更新日志 |
+| [SECURITY.md](SECURITY.md) | 攻击面清单与部署硬性要求 |
+
+## 参与
+
+提 issue 前先看 [贡献指南](https://github.com/SelkieLab/.github/blob/main/CONTRIBUTING.md)。
+安全问题按 [SECURITY.md](SECURITY.md) 私下报告。
 
 ## 许可
 

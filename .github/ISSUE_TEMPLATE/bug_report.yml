@@ -1,0 +1,71 @@
+name: 报告问题
+description: 有东西没按预期工作
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        贴日志前请把口令、IP、域名、QQ 号删掉。
+
+  - type: textarea
+    id: what
+    attributes:
+      label: 发生了什么
+      description: 实际看到的现象
+    validations:
+      required: true
+
+  - type: textarea
+    id: expect
+    attributes:
+      label: 你期望发生什么
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 打开 …
+        2. 点击 …
+        3. 看到 …
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: 版本 / commit
+      placeholder: 例如 v0.1.0 或 5a66288
+    validations:
+      required: true
+
+  - type: dropdown
+    id: deploy
+    attributes:
+      label: 部署方式
+      options:
+        - systemd
+        - 直接 python3 server.py
+        - Docker
+        - 其他
+    validations:
+      required: true
+
+  - type: input
+    id: env
+    attributes:
+      label: 环境
+      placeholder: 例如 Ubuntu 22.04 / Python 3.11 / Docker 27
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志
+      description: 相关日志片段，注意脱敏
+      render: shell
+    validations:
+      required: false
