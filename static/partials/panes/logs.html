@@ -1,0 +1,33 @@
+<section class="pane" id="pane-logs">
+        <div class="card">
+          <div class="log-toolbar">
+            <div class="seg" id="logSeg">
+              <button class="on" data-src="astrbot">AstrBot</button>
+              <button data-src="snowluma">SnowLuma</button>
+            </div>
+            <div class="seg" id="levelSeg">
+              <button class="on" data-level="all">全部</button>
+              <button data-level="info">信息</button>
+              <button data-level="warn">警告</button>
+              <button data-level="error">错误</button>
+            </div>
+            <div class="search-box">
+              <svg class="ic"><use href="#i-search"/></svg>
+              <input id="logFilter" placeholder="搜索日志…">
+            </div>
+            <select class="field mini" id="logLines">
+              <option value="200">200 行</option>
+              <option value="300" selected>300 行</option>
+              <option value="500">500 行</option>
+              <option value="1000">1000 行</option>
+            </select>
+            <button class="btn icon ripple" id="btnPause" title="暂停/继续自动刷新"><svg class="ic"><use href="#i-pause"/></svg></button>
+            <button class="btn icon ripple" id="btnLive" title="实时流（自动跟随）"><svg class="ic"><use href="#i-play"/></svg></button>
+            <button class="btn icon ripple" id="btnLogRefresh" title="刷新"><svg class="ic"><use href="#i-refresh"/></svg></button>
+            <button class="btn icon ripple" id="btnLogDownload" title="下载当前日志"><svg class="ic"><use href="#i-download"/></svg></button>
+            <div class="spacer"></div>
+            <span class="muted" id="logCount"></span>
+          </div>
+          <pre class="log" id="logBox">加载中…</pre>
+        </div>
+      </section>

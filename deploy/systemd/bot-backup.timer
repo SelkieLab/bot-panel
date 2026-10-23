@@ -1,0 +1,12 @@
+[Unit]
+Description=Run QQ bot backup daily
+
+[Timer]
+# 每天 04:30（北京时间）：QQ 最闲、磁盘 IO 最低的时段
+OnCalendar=*-*-* 04:30:00
+RandomizedDelaySec=600
+Persistent=true
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

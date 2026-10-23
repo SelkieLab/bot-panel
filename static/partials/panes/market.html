@@ -1,0 +1,29 @@
+<section class="pane" id="pane-market">
+        <div class="card" style="margin-bottom:14px">
+          <div class="row wrap" style="margin-bottom:10px">
+            <h2 style="margin:0">AstrBot 插件市场</h2>
+            <div class="spacer"></div>
+            <button class="btn text sm" id="mkRefresh">刷新市场</button>
+            <span class="muted" id="mkCount"></span>
+          </div>
+          <div class="row wrap">
+            <div style="flex:1;min-width:220px;position:relative">
+              <svg class="ic" style="position:absolute;left:14px;top:12px;color:var(--on-v)"><use href="#i-search"/></svg>
+              <input class="field" id="mkQuery" placeholder="搜索 AstrBot 插件：qq / 画图 / 音乐 / 签到…" style="padding-left:44px;border-radius:24px;height:44px">
+            </div>
+            <select class="field" id="mkSort" style="width:auto;min-width:128px;border-radius:24px;height:44px">
+              <option value="stars">按星标</option>
+              <option value="downloads">按下载量</option>
+              <option value="name">按名称</option>
+            </select>
+          </div>
+          <div class="chips" id="mkCats" style="margin-top:12px"></div>
+          <div class="muted" style="margin-top:10px">数据来自 AstrBot 官方插件市场，点「安装」会直接下发到服务器上的 AstrBot（安装耗时取决于服务器访问 GitHub 的速度）。</div>
+        </div>
+        <div class="grid g2" id="mkList"></div>
+        <div class="row" id="mkPager" style="justify-content:center;gap:10px;margin-top:16px;display:none">
+          <button class="btn text sm" id="mkPrev">上一页</button>
+          <span class="muted" id="mkPageInfo"></span>
+          <button class="btn text sm" id="mkNext">下一页</button>
+        </div>
+      </section>

@@ -1,0 +1,23 @@
+<section class="pane" id="pane-personas">
+        <div class="card" style="margin-bottom:14px">
+          <div class="row" style="margin-bottom:12px"><h2 style="margin:0">人格模板</h2><div class="spacer"></div><span class="muted">来自本地 docx，可一键建成 AstrBot 人格</span></div>
+          <div class="col" id="tplList"><div class="empty">加载中…</div></div>
+        </div>
+        <div class="grid g2" style="align-items:start">
+          <div class="card">
+            <div class="row" style="margin-bottom:14px"><h2 style="margin:0">人格列表</h2><div class="spacer"></div>
+              <button class="btn text sm ripple" id="btnPersonaRefresh">刷新</button></div>
+            <div class="col" id="personaList"></div>
+            <div class="muted" style="margin-top:12px">新建 / 编辑人格请到 AstrBot WebUI「人格」页；这里可以查看和复制系统提示词。</div>
+          </div>
+          <div class="card">
+            <h2>系统提示词</h2>
+            <textarea class="field" id="personaPrompt" placeholder="选择左侧人格查看，可直接编辑后保存"></textarea>
+            <div class="row" style="margin-top:12px;flex-wrap:wrap">
+              <button class="btn filled sm ripple" id="btnPersonaSave">保存修改</button>
+              <button class="btn tonal sm ripple" id="btnPersonaCopy">复制提示词</button>
+              <span class="muted" id="personaName"></span>
+            </div>
+          </div>
+        </div>
+      </section>

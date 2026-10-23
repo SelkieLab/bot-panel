@@ -1,0 +1,59 @@
+[Unit]
+Description=QQ Bot Control Panel
+After=network.target docker.service
+Wants=docker.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/bots/panel
+Environment=PANEL_PUBLIC_HOST=panel.example.com
+Environment=HOME=/home/botpanel
+ExecStart=/usr/bin/python3 /opt/bots/panel/server.py
+
+# --- 降权：专用非特权用户，仅通过 docker 组访问 daemon ---
+User=botpanel
+Group=botpanel
+SupplementaryGroups=docker
+
+Restart=always
+RestartSec=3
+
+# --- 资源上限：防止面板自身把 1.7G 的小机器吃满 ---
+MemoryMax=320M
+MemoryHigh=256M
+TasksMax=256
+LimitNOFILE=8192
+
+# --- 沙箱加固 ---
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+ProtectProc=invisible
+RestrictSUIDSGID=yes
+RestrictRealtime=yes
+RestrictNamespaces=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RemoveIPC=yes
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallErrorNumber=EPERM
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+# ProtectSystem=strict 下只有这些路径可写
+# docker CLI 需要可写的 daemon socket，否则面板所有容器操作全部失效
+ReadWritePaths=/opt/bots/panel /opt/bots/astrbot/data/cmd_config.json /run/docker.sock /var/run/docker.sock /home/botpanel/.docker
+# 面板要读 AstrBot 数据（sqlite 只读打开）与 docker CLI
+ReadOnlyPaths=/opt/bots/astrbot/data
+
+[Install]
+WantedBy=multi-user.target

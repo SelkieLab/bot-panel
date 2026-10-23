@@ -1,0 +1,91 @@
+<section class="pane on" id="pane-overview">
+        <div class="dash-head">
+          <span class="muted" id="dashHint">自定义布局：点右上角铅笔编辑</span>
+          <div class="spacer"></div>
+          <button class="btn tonal sm" id="btnDashAdd" style="display:none">+ 添加组件</button>
+          <button class="btn text sm" id="btnDashReset" style="display:none">恢复默认</button>
+          <button class="btn text sm" id="btnDashDone" style="display:none">完成</button>
+        </div>
+        <div class="dash" id="dash">
+          <div class="dash-card" data-card="bot">
+            <button class="dash-rm" data-rm="bot" title="移除这个卡片"><svg class="ic" style="width:14px;height:14px"><use href="#i-close"/></svg></button>
+            <div class="dash-move"><button class="drag-handle" data-drag="bot" title="拖动排序">⠿</button><button data-wide="bot" title="切换宽度">⤢</button></div>
+            <div class="card high" id="botCard">
+              <div class="hero">
+                <img class="avatar" id="botAvatar" alt="">
+                <div style="min-width:0">
+                  <div class="nick" id="botNick">加载中…</div>
+                  <div class="meta" id="botMeta"></div>
+                </div>
+              </div>
+              <div class="grid g4 stats-mobile" style="margin-top:18px" id="botStats"></div>
+              <div id="qrBox" style="display:none;margin-top:18px;background:rgba(0,0,0,.18);border-radius:18px;padding:14px;text-align:center">
+                <div style="font-size:13px;margin-bottom:10px">QQ 未登录 · 用手机 QQ 扫码</div>
+                <img id="qrImg" alt="QQ 登录二维码" style="width:min(260px,70vw);height:auto;border-radius:12px;background:#fff;padding:6px">
+                <div><button class="btn tonal sm" id="btnQrRefresh" style="margin-top:10px">刷新二维码</button></div>
+                <div class="muted" style="margin-top:8px;font-size:11px">二维码过期会自动刷新；也可以点按钮立即换一张。</div>
+              </div>
+            </div>
+          </div>
+          <div class="dash-card" data-card="services">
+            <button class="dash-rm" data-rm="services" title="移除这个卡片"><svg class="ic" style="width:14px;height:14px"><use href="#i-close"/></svg></button>
+            <div class="dash-move"><button class="drag-handle" data-drag="services" title="拖动排序">⠿</button><button data-wide="services" title="切换宽度">⤢</button></div>
+            <div class="card">
+              <h2>服务</h2>
+              <div id="services"></div>
+            </div>
+          </div>
+          <div class="dash-card" data-card="server">
+            <button class="dash-rm" data-rm="server" title="移除这个卡片"><svg class="ic" style="width:14px;height:14px"><use href="#i-close"/></svg></button>
+            <div class="dash-move"><button class="drag-handle" data-drag="server" title="拖动排序">⠿</button><button data-wide="server" title="切换宽度">⤢</button></div>
+            <div class="card">
+              <h2>服务器</h2>
+              <div id="serverInfo"></div>
+              <div id="serverMetrics"></div>
+            </div>
+          </div>
+          <div class="dash-card" data-card="containers">
+            <button class="dash-rm" data-rm="containers" title="移除这个卡片"><svg class="ic" style="width:14px;height:14px"><use href="#i-close"/></svg></button>
+            <div class="dash-move"><button class="drag-handle" data-drag="containers" title="拖动排序">⠿</button><button data-wide="containers" title="切换宽度">⤢</button></div>
+            <div class="card">
+              <h2>容器 / 主人</h2>
+              <table><thead><tr><th>容器</th><th>状态</th><th>CPU</th><th>内存</th></tr></thead><tbody id="containers"></tbody></table>
+              <div style="margin-top:14px" id="ownerStrip"></div>
+            </div>
+          </div>
+          <div class="dash-card" data-card="quick">
+            <button class="dash-rm" data-rm="quick" title="移除这个卡片"><svg class="ic" style="width:14px;height:14px"><use href="#i-close"/></svg></button>
+            <div class="dash-move"><button class="drag-handle" data-drag="quick" title="拖动排序">⠿</button><button data-wide="quick" title="切换宽度">⤢</button></div>
+            <div class="card">
+              <h2>快捷操作</h2>
+              <div class="row wrap" style="gap:8px">
+                <button class="btn tonal sm" data-quick="refresh">刷新状态</button>
+                <button class="btn tonal sm" data-quick="restart">重启 AstrBot</button>
+                <button class="btn tonal sm" data-quick="vnc">远程桌面</button>
+              </div>
+            </div>
+          </div>
+          <div class="dash-card span2" data-card="tokens">
+            <button class="dash-rm" data-rm="tokens" title="移除这个卡片"><svg class="ic" style="width:14px;height:14px"><use href="#i-close"/></svg></button>
+            <div class="dash-move"><button class="drag-handle" data-drag="tokens" title="拖动排序">⠿</button><button data-wide="tokens" title="切换宽度">⤢</button></div>
+            <div class="card">
+              <div class="row">
+                <h2 style="margin:0">Token 用量</h2>
+                <div class="spacer"></div>
+                <span class="muted" id="tokHint"></span>
+              </div>
+              <div class="grid g4 stats-mobile" id="tokStats" style="margin-top:14px"></div>
+              <div class="tok-bars" id="tokBars" style="margin-top:16px"></div>
+              <div id="tokModels" style="margin-top:14px"></div>
+            </div>
+          </div>
+          <div class="dash-card span2" data-card="latency">
+            <button class="dash-rm" data-rm="latency" title="移除这个卡片"><svg class="ic" style="width:14px;height:14px"><use href="#i-close"/></svg></button>
+            <div class="dash-move"><button class="drag-handle" data-drag="latency" title="拖动排序">⠿</button><button data-wide="latency" title="切换宽度">⤢</button></div>
+            <div class="card">
+              <h2>最近回复</h2>
+              <div id="latencyList"></div>
+            </div>
+          </div>
+        </div>
+      </section>

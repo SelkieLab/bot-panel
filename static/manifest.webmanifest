@@ -1,0 +1,11 @@
+{
+  "name": "QQ Bot 控制台",
+  "short_name": "Bot 控制台",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#131316",
+  "theme_color": "#131316",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

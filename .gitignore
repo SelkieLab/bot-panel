@@ -1,0 +1,16 @@
+# 运行时产生的数据，永远不进仓库
+config.json
+config.json.tmp
+audit.log
+audit.log.*
+cache/
+downloads/
+knowledge/
+tls/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+
+# 个人角色设定库：只提交 personas.example.json
+personas.json

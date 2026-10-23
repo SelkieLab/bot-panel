@@ -1,0 +1,14 @@
+[Unit]
+Description=Daily backup for QQ bot (AstrBot + QQ login + panel)
+Documentation=file:///opt/bots/bin/backup.sh
+
+[Service]
+Type=oneshot
+ExecStart=/opt/bots/bin/backup.sh
+Nice=10
+IOSchedulingClass=idle
+# 备份是重 IO 操作，限制它别把 1.7G 的小机器拖垮
+MemoryMax=512M
+IOSchedulingPriority=7
+PrivateTmp=yes
+NoNewPrivileges=yes

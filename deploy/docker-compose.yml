@@ -1,0 +1,95 @@
+# /opt/bots/docker-compose.yml
+# 目的：把 astrbot / snowluma 从 :latest 浮动标签改成 digest 固定引用，
+#      升级变成显式动作（改这一行 + docker compose up -d），不再随机发生。
+#
+# 用法：
+#   cd /opt/bots && docker compose up -d        # 应用
+#   docker compose config                      # 校验
+#
+# 升级（显式）：
+#   docker pull soulter/astrbot@sha256:<新digest>
+#   改下面的 image 行 → docker compose up -d
+#
+# 注意：以下参数是从原 `docker run` 容器逐项抄出来的，改动会导致 QQ 起不来。
+#   snowluma 需要 CAP_SYS_PTRACE（hook 注入 QQ 进程）、1G shm、seccomp=unconfined、
+#   nofile 65536/1048576，缺一个都可能让 QQ 客户端崩溃。
+
+services:
+  astrbot:
+    image: soulter/astrbot@sha256:a140a326163ac5f82f62153f033cddeac74e38e4ee1809c6e333e950ff19edc4
+    container_name: astrbot
+    hostname: astrbot
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Shanghai
+      LANG: C.UTF-8
+    command: ["python", "main.py"]
+    working_dir: /AstrBot
+    ports:
+      - "127.0.0.1:6185:6185"
+      - "127.0.0.1:6199:6199"
+    volumes:
+      - ${BOTS_ROOT:-/opt/bots}/astrbot/data:/AstrBot/data
+      - /etc/localtime:/etc/localtime:ro
+    shm_size: 64m
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "3"
+    networks:
+      - botnet
+
+  snowluma:
+    image: motricseven7/snowluma@sha256:d1afe0a15ef66aeb3a591d855e8e0064f971f11b4aaa2315ba24750853a0ec0e
+    container_name: snowluma
+    hostname: snowluma
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Shanghai
+      LANG: C.UTF-8
+    entrypoint: ["docker-entrypoint.sh"]
+    command: ["/root/start.sh"]
+    working_dir: /app/data
+    # hook 注入 QQ 进程需要 ptrace；seccomp unconfined 是 SnowLuma 官方要求
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp=unconfined
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 1048576
+    ports:
+      - "127.0.0.1:3000:3000"
+      - "127.0.0.1:3001:3001"
+      - "127.0.0.1:5099:5099"
+      - "127.0.0.1:6081:6081"
+    volumes:
+      - qq-client-config:/app/.config
+      - qq-gateway-data:/app/data
+      - qq-client-data:/app/.local/share
+    shm_size: 1g
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "3"
+    networks:
+      - botnet
+
+volumes:
+  qq-client-config:
+    name: qq-client-config
+    external: true
+  qq-gateway-data:
+    name: qq-gateway-data
+    external: true
+  qq-client-data:
+    name: qq-client-data
+    external: true
+
+networks:
+  botnet:
+    name: botnet
+    external: true
