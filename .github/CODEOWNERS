@@ -1,0 +1,8 @@
+# 默认所有文件归维护者
+*                       @Bzdhyp
+
+# 部署与安全相关的改动得有人过一眼
+/deploy/                @Bzdhyp
+/SECURITY.md            @Bzdhyp
+/.github/workflows/     @Bzdhyp
+/server.py              @Bzdhyp

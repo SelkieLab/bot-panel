@@ -1,0 +1,38 @@
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+change-template: '- $TITLE (#$NUMBER) @$AUTHOR'
+no-changes-template: '- 本次没有代码变更'
+
+categories:
+  - title: 新功能
+    labels: [enhancement, feature]
+  - title: 修复
+    labels: [bug, fix]
+  - title: 安全
+    labels: [security]
+  - title: 文档
+    labels: [documentation]
+  - title: 依赖与维护
+    labels: [dependencies, chore]
+  - title: 其他改动
+    labels: ['*']
+
+version-resolver:
+  major:
+    labels: [major, breaking]
+  minor:
+    labels: [minor, enhancement, feature]
+  patch:
+    labels: [patch, bug, fix, documentation, chore, dependencies]
+  default: patch
+
+template: |
+  ## 改了什么
+
+  $CHANGES
+
+  ## 升级注意
+
+  <!-- 有破坏性改动就写在这里，没有就删掉这节 -->
+
+  **完整对比**：https://github.com/SelkieLab/bot-panel/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION

@@ -1,0 +1,35 @@
+name: Stale
+
+on:
+  schedule:
+    - cron: '30 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9
+        with:
+          # 先提醒，再关。给人回话的窗口期。
+          days-before-stale: 60
+          days-before-close: 21
+          stale-issue-message: |
+            这条 issue 已经 60 天没有动静了。
+
+            如果问题还在，回一句现状就能保留；如果是我们等你补充信息，补上之后会重新计时。
+            21 天后仍无回应会自动关闭，之后再开也欢迎。
+          close-issue-message: '因长期无回应关闭。问题复现的话直接新开一条，附上版本号和日志即可。'
+          stale-pr-message: |
+            这个 PR 已经 60 天没有更新。
+            还在做的话推一次提交就行；做不下去了也没关系，说一声我们好安排。
+          close-pr-message: '长期无更新，先关闭。想做的时候重开即可。'
+          stale-issue-label: 'stale'
+          stale-pr-label: 'stale'
+          exempt-issue-labels: 'pinned,security,help wanted'
+          exempt-pr-labels: 'pinned,security'
+          operations-per-run: 40

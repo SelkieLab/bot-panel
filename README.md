@@ -4,6 +4,7 @@
 [![License](https://img.shields.io/github/license/SelkieLab/bot-panel?color=3ddc97)](https://github.com/SelkieLab/bot-panel/blob/main/LICENSE)
 [![Python](https://img.shields.io/badge/python-3.8%2B-d0bcff)](https://www.python.org)
 [![依赖](https://img.shields.io/badge/dependencies-0-d0bcff)](#快速开始)
+[![CodeQL](https://github.com/SelkieLab/bot-panel/actions/workflows/codeql.yml/badge.svg)](https://github.com/SelkieLab/bot-panel/actions/workflows/codeql.yml)
 
 AstrBot + SnowLuma 的单文件控制面板。纯 Python 标准库，零第三方依赖。
 
@@ -126,6 +127,25 @@ sudo systemctl daemon-reload && sudo systemctl enable --now bot-panel
 
 ---
 
+## 用 Docker 跑
+
+不想装 systemd 单元的话：
+
+```bash
+docker build -t bot-panel .
+
+docker run -d --name bot-panel \
+  --network host \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /opt/bots/panel-data:/app/data \
+  -e PANEL_INIT_PASSWORD='你的密码' \
+  --restart unless-stopped \
+  bot-panel
+```
+
+必须挂 `docker.sock`（否则管不了容器），必须用 `--network host`（面板默认连 `127.0.0.1` 的上游），
+数据要挂卷（不然容器删了就没了）。详见 [docs/DEPLOY.md](docs/DEPLOY.md#8-用-docker-跑面板可选)。
+
 ## 安全模型
 
 * 面板口令 **PBKDF2-SHA256**（12 万轮，独立盐）；改密后 `pwv` 递增，旧会话立即失效
@@ -156,6 +176,8 @@ sudo systemctl daemon-reload && sudo systemctl enable --now bot-panel
 | [docs/CHANGELOG-2026-10-23.md](docs/CHANGELOG-2026-10-23.md) | 首个版本之前的 11 项改造记录 |
 | [CHANGELOG.md](CHANGELOG.md) | 版本更新日志 |
 | [SECURITY.md](SECURITY.md) | 攻击面清单与部署硬性要求 |
+| [SUPPORT.md](SUPPORT.md) | 出问题按什么顺序查，什么情况该开 issue |
+| [CHANGELOG.md](CHANGELOG.md) | 版本更新日志 |
 
 ## 参与
 

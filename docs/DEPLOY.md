@@ -112,6 +112,30 @@ sudo systemctl daemon-reload && sudo systemctl enable --now bot-backup.timer
 只备不可再生数据：AstrBot 库与配置、QQ 登录态、面板自身。
 sqlite 用在线 `.backup` 保证 WAL 下也一致。
 
+## 8. 用 Docker 跑面板（可选）
+
+不想装 systemd 单元的话，仓库自带 `Dockerfile`：
+
+```bash
+docker build -t bot-panel .
+
+docker run -d --name bot-panel \
+  --network host \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /opt/bots/panel-data:/app/data \
+  -e PANEL_INIT_PASSWORD='你的密码' \
+  -e ASTRBOT_BASE=http://127.0.0.1:6185 \
+  -e SNOWLUMA_BASE=http://127.0.0.1:5099 \
+  --restart unless-stopped \
+  bot-panel
+```
+
+三个注意点：
+
+1. **必须挂 `docker.sock`**，否则面板看不到也管不了容器。这等于把宿主的 docker 权限给了容器，自己权衡。
+2. **用 `--network host`**，因为面板默认连 `127.0.0.1` 的上游服务；换成 bridge 网络就得把 `ASTRBOT_BASE` 之类改成宿主 IP。
+3. **数据要挂出来**：`config.json`、`audit.log`、`knowledge/`、`tls/` 都在 `/app` 下，不挂卷容器一删就没了。
+
 ## 排障
 
 | 现象 | 先看什么 |
