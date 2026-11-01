@@ -48,7 +48,7 @@ jobs:
         if: steps.check.outputs.ok == 'true'
         run: echo "tag=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
-      - uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v7
         if: steps.check.outputs.ok == 'true'
         with:
           context: .
